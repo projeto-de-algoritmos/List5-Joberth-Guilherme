@@ -113,7 +113,7 @@ function mount() {
 
     //modal
     var table_itens = document.getElementById("table-itens");
-    
+
     for (let element of obj_itens) {
         let row = table_itens.insertRow();
         for (key in element) {
@@ -130,6 +130,99 @@ function mount() {
     h2_sac.innerText = "O peso da mochila é: " + size;
     strong_sac.appendChild(h2_sac);
     main_table.appendChild(strong_sac);
+
+    Knapsack(obj_itens, size);
+
+}
+
+function createMainHeadTable(headRow, i){
+    var th=document.createElement("th");
+    th.scope = "col"
+    th.appendChild(document.createTextNode(i));
+    headRow.appendChild(th);
+
+    return headRow;
+}
+
+function Knapsack(obje, size) {
+    var mainM = new Array();
+
+    var zeros = new Array();
+
+    for (var i = 0; i < parseInt(size) + 1; i++) {
+        zeros.push(0);
+    }
+
+    mainM.push(zeros);
+
+    for (var i = 0; i < obje.length; i++) {
+        var aux = new Array();
+        aux.push(0);
+
+        for (var j = 1; j < parseInt(size) + 1; j++) {
+            aux.push(-1);
+        }
+
+        mainM.push(aux);
+    }
+
+
+    for (var i = 1; i < obje.length + 1; i++) {
+        for (var j = 1; j < parseInt(size) + 1; j++) {
+            if (j - obje[i - 1].weight < 0){
+                mainM[i][j] = mainM[i -1][j];
+            }else{
+                mainM[i][j] = Math.max(mainM[i - 1][j - obje[i - 1].weight] + obje[i - 1].value, mainM[i - 1][j]);
+            }
+        }
+    }
+
+    // create main table
+    var main_table = document.getElementById("table-sac");
+    var table = document.createElement("table");
+    table.className="table mt-5";
+    var thead = document.createElement("thead");
+    thead.className = "thead-dark";
+    var tbody = document.createElement("tbody");
+    var headRow = document.createElement("tr");
+
+    headRow = createMainHeadTable(headRow, "Itens");
+
+    for (var  i = 0; i < parseInt(size) + 1 ; i++){
+        headRow = createMainHeadTable(headRow, i);
+    }
+
+    thead.appendChild(headRow);
+    table.appendChild(thead); 
+
+    console.log(obje);
+
+    for (var i = 0; i < obje.length + 1; i++) {
+        var tr = document.createElement("tr");
+        for (var j = 0; j < parseInt(size) + 2; j++) {
+            
+            var td = document.createElement("td");
+
+            if(i == 0 && j == 0){
+                td.appendChild(document.createTextNode(0));
+                tr.appendChild(td);
+            }
+            else if(j == 0){
+                td.appendChild(document.createTextNode(obje[i - 1].item));
+                tr.appendChild(td);      
+            }else{
+                td.appendChild(document.createTextNode(mainM[i][j - 1]));
+                tr.appendChild(td);
+            }
+        }
+        tbody.appendChild(tr);  
+    }
+    
+      table.appendChild(tbody)
+
+    main_table.appendChild(table);
+
+
 
 }
 
