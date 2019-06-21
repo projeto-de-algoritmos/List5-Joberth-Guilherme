@@ -180,7 +180,7 @@ function Knapsack(obje, size) {
     // create main table
     var main_table = document.getElementById("table-sac");
     var table = document.createElement("table");
-    table.className="table mt-5";
+    table.className="table mt-5 mb-5";
     var thead = document.createElement("thead");
     thead.className = "thead-dark";
     var tbody = document.createElement("tbody");
@@ -195,13 +195,12 @@ function Knapsack(obje, size) {
     thead.appendChild(headRow);
     table.appendChild(thead); 
 
-    console.log(obje);
-
     for (var i = 0; i < obje.length + 1; i++) {
         var tr = document.createElement("tr");
         for (var j = 0; j < parseInt(size) + 2; j++) {
             
             var td = document.createElement("td");
+            td.id = "i" + i + "j" + String(j - 1);
 
             if(i == 0 && j == 0){
                 td.appendChild(document.createTextNode(0));
@@ -222,9 +221,59 @@ function Knapsack(obje, size) {
 
     main_table.appendChild(table);
 
-
-
+    console.log(obje);
+    console.log(mainM);
+    lookingAnswer(obje, mainM, size);
 }
+
+function lookingAnswer(obje, mainM, size){
+    var answerLocation = new Array();
+    var tookItens = new Array();
+
+    var i = parseInt(obje.length);
+    var j = parseInt(size);
+
+    var maxValue = mainM[i][j]
+    answerLocation.push({i: i, j: j})
+
+    while(i != 0){
+
+        if (j - obje[i - 1].weight < 0){
+            answerLocation.push({i: i - 1, j: j});
+            i = i - 1;
+        }else if (mainM[i][j] == mainM[i - 1][j - obje[i - 1].weight] + obje[i - 1].value){
+            answerLocation.push({i: i - 1, j: j - obje[i - 1].weight});
+            tookItens.push(obje[i - 1].item);
+            j = j - obje[i - 1].weight;
+            i = i - 1;
+        }else if(mainM[i - 1][j] == mainM[i][j]){
+            answerLocation.push({i: i - 1, j: j});
+            i -= 1;
+        }
+    }
+
+    answerLocation.forEach(el => {
+        td = document.getElementById("i" + el.i + "j" + el.j);
+        td.style.backgroundColor = "#fff000"
+    })
+
+    console.log(tookItens);
+
+    var text = "Os elementos levados foram: ";
+
+    for (var i = 0; i < tookItens.length - 1; i++){
+        text += tookItens[i]  + ","
+    }
+
+    text += tookItens[tookItens.length - 1] + "\n" + "Valor máximo da mochila: " + maxValue;
+
+    var p = document.createElement("h2");
+    p.innerText = text;
+    document.getElementById("table-sac").appendChild(p);
+    
+}
+
+
 
 
 
