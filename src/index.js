@@ -1,5 +1,5 @@
-function addField(){
-  
+function addField() {
+
     var fields = document.getElementById("fields");
     var div_row = document.createElement("div");
 
@@ -16,6 +16,7 @@ function addField(){
     input_item.name = "item" + sumChild;
     input_item.id = "item" + sumChild;
     input_item.className = "form-control item";
+    input_item.required = true;
     item.appendChild(input_item);
 
     var value = document.createElement("div");
@@ -28,6 +29,8 @@ function addField(){
     input_value.type = "number";
     input_value.name = "value" + sumChild;
     input_value.id = "value" + sumChild;
+    input_value.value = 0;
+    input_value.required = true;
     value.appendChild(input_value);
 
     var weight = document.createElement("div");
@@ -40,6 +43,8 @@ function addField(){
     input_weight.type = "number";
     input_weight.name = "weight" + sumChild;
     input_weight.id = "weight" + sumChild;
+    input_weight.value = 0;
+    input_value.required = true;
     weight.appendChild(input_weight);
 
     var button_del = document.createElement("button");
@@ -48,8 +53,8 @@ function addField(){
     button_del.innerText = "Deletar";
     button_del.type = "button";
     button_del.style.height = "40px";
-    button_del.addEventListener("click", function(){
-        var div_del = document.getElementById("input"+sumChild);
+    button_del.addEventListener("click", function () {
+        var div_del = document.getElementById("input" + sumChild);
         div_del.parentNode.removeChild(div_del);
     });
 
@@ -61,31 +66,52 @@ function addField(){
     fields.appendChild(div_row);
 }
 
-var weights;
-var values;
-var itens;
-
-function saveData(){
+function saveData() {
     var itens_html = document.getElementsByClassName("item");
     var values_html = document.getElementsByClassName("value");
     var weights_html = document.getElementsByClassName("weight");
 
-    weights = new Array(document.getElementById("fields").childElementCount - 1);
-    values = new Array(document.getElementById("fields").childElementCount - 1);
-    itens = new Array(document.getElementById("fields").childElementCount - 1);
+    var weights = new Array();
+    var values = new Array();
+    var itens = new Array();
 
     Object.entries(itens_html).map((object) => { itens.push(object[1].value) });
     Object.entries(values_html).map((object) => { values.push(object[1].value) });
     Object.entries(weights_html).map((object) => { weights.push(object[1].value) });
 
-    console.log(weights)
-    console.log(values)
-    console.log(itens)
+    var size_sac = document.getElementById("weight-sac").value;
 
-    /*setTimeout(() => {
+    localStorage.setItem('weight', weights);
+    localStorage.setItem('value', values);
+    localStorage.setItem('itens', itens);
+    localStorage.setItem('sizeSac', size_sac);
+
+    setTimeout(() => {
         window.location = "./table.html";
-    }, 1000);*/
+    }, 750);
 
+}
+
+function mount() {
+    var obj_itens = new Array;
+    var weights = localStorage.getItem('weight');
+    var size = localStorage.getItem('sizeSac');
+    var values = localStorage.getItem('value');
+    var itens = localStorage.getItem('itens');
+
+    weights = weights.split(",");
+    values = values.split(",");
+    itens = itens.split(",");
+
+    for (var i = 0; i < weights.length; i++) {
+        obj_itens.push({ item: itens[i], value: parseInt(values[i]), weight: parseInt(weights[i]) })
+    }
+
+    obj_itens = obj_itens.sort(function (a, b) {
+        return a.weight - b.weight
+    })
+
+    
 }
 
 

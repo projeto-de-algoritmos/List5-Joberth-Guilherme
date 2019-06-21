@@ -15,10 +15,12 @@
     <nav class="navbar navbar-dark bg-dark mb-5">
         <a class="navbar-brand mx-auto" href="#">Knapsac Problem</a>
     </nav>
-    <div class="col-1">
-        <button class="btn btn-primary add" onclick="addField()" style="margin-top: 30px;">Adicionar</button>
-    </div>
     <div class="container">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-warning add float-right mb-5" onclick="addField()" required style="color: white">Adicionar</button>
+            </div>
+        </div>
         <form method="get" action="table.html" id="myform">
             <div class="row">
                 <div class="form-group col">
@@ -30,15 +32,15 @@
                 <div class="row">
                     <div class="form-group col-5">
                         <label for="item1">Item</label>
-                        <input type="text" class="form-control item" name="item1" id="item1">
+                        <input type="text" class="form-control item" name="item1" id="item1" required>
                     </div>
                     <div class="form-group col-3">
                         <label for="value1">Valor</label>
-                        <input type="number" name="value1" class="form-control value" id="value1" value="0">
+                        <input type="number" name="value1" class="form-control value" id="value1" value="0" required>
                     </div>
                     <div class="form-group col-3">
                         <label for="value1">Peso</label>
-                        <input type="number" name="weight1" class="form-control weight" id="value1" value="0">
+                        <input type="number" name="weight1" class="form-control weight" id="value1" value="0" required>
                     </div>
                 </div>
             </div>
