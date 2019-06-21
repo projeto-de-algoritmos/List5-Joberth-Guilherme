@@ -17,6 +17,7 @@ function addField() {
     input_item.id = "item" + sumChild;
     input_item.className = "form-control item";
     input_item.required = true;
+    input_item.value = "Item" + sumChild;
     item.appendChild(input_item);
 
     var value = document.createElement("div");
@@ -87,9 +88,13 @@ function saveData() {
     localStorage.setItem('sizeSac', size_sac);
 
     setTimeout(() => {
-        window.location = "./table.html";
+        window.location = "./src/table.html";
     }, 750);
 
+}
+
+function back(){
+    window.location = "../index.html";
 }
 
 function mount() {
@@ -259,13 +264,20 @@ function lookingAnswer(obje, mainM, size){
 
     console.log(tookItens);
 
-    var text = "Os elementos levados foram: ";
+    var text = "";
 
-    for (var i = 0; i < tookItens.length - 1; i++){
-        text += tookItens[i]  + ","
+    if(tookItens.length != 0){
+        text = "Os elementos levados foram: ";
+
+        for (var i = 0; i < tookItens.length - 1; i++){
+            text += tookItens[i]  + " => "
+        }
+
+        text += tookItens[tookItens.length - 1] + "\n" + "Valor máximo da mochila: " + maxValue;
+        
+    }else{
+        text = "Não há elementos compatíveis com a mochila!";
     }
-
-    text += tookItens[tookItens.length - 1] + "\n" + "Valor máximo da mochila: " + maxValue;
 
     var p = document.createElement("h2");
     p.innerText = text;
