@@ -111,7 +111,26 @@ function mount() {
         return a.weight - b.weight
     })
 
+    //modal
+    var table_itens = document.getElementById("table-itens");
     
+    for (let element of obj_itens) {
+        let row = table_itens.insertRow();
+        for (key in element) {
+            let cell = row.insertCell();
+            let text = document.createTextNode(element[key]);
+            cell.appendChild(text);
+        }
+    }
+
+    //size bacpack
+    var main_table = document.getElementById("table-sac");
+    var h2_sac = document.createElement("h2");
+    var strong_sac = document.createElement("strong");
+    h2_sac.innerText = "O peso da mochila é: " + size;
+    strong_sac.appendChild(h2_sac);
+    main_table.appendChild(strong_sac);
+
 }
 
 

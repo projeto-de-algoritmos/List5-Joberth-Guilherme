@@ -15,7 +15,37 @@
     <nav class="navbar navbar-dark bg-dark mb-5">
         <a class="navbar-brand mx-auto" href="#">Knapsac Problem</a>
     </nav>
-    <div id="table-sac container"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-dark float-right" type="button" data-toggle="modal" data-target="#see-itens">Ver itens</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="see-itens" tabindex="-1" role="dialog" aria-labelledby="itens" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="itens">Tabela de itens</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table style="width:100%" id="table-itens" class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Itens</th>
+                                <th scope="col">Valor</th> 
+                                <th scope="col">Peso</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="table-sac" class="container"></div>
     <script>
         window.onload = mount;
     </script>
